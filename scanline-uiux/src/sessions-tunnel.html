@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>隧道会话(端口映射/SOCKS5)— HTML 轨</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/components.css">
+<style>/* 仅本页样式:隧道会话(会话类型 × 端口映射/SOCKS5) */
+.bannert{position:absolute;top:36px;left:48px;right:0;height:44px;display:flex;align-items:center;gap:10px;
+  padding:0 16px;border-bottom:1px solid var(--sep);z-index:4;font-size:13px;color:var(--ink-1)}
+.bannert .chip{background:color-mix(in srgb,var(--c-success) 14%,transparent);color:var(--c-success-text)}
+.ruletable{position:absolute;top:80px;left:48px;right:0;bottom:200px;overflow:hidden;font-size:13px;color:var(--ink-1)}
+.rhead,.rrow{display:flex;align-items:center;gap:10px;padding:0 14px;height:36px}
+.rhead{color:var(--ink-3);font-size:11.5px;border-bottom:1px solid var(--sep)}
+.rrow{border-bottom:1px solid var(--sep-row)}
+.rname{width:130px;font-weight:600}
+.rtype{width:120px}
+.rpath{flex:1;font:12.5px var(--font-mono);color:var(--ink-2)}
+.rstate{width:90px}
+.logbox{position:absolute;left:48px;right:0;bottom:28px;height:172px;border-top:1px solid var(--sep);
+  background:var(--bg-term);padding:8px 14px;font:12px/1.6 var(--font-mono);color:var(--ink-2);z-index:3}
+.logbox .h{font:600 12px var(--font-ui);color:var(--ink-2);margin-bottom:4px}
+</style>
+<script src="assets/theme.js"></script><script src="assets/icons.js"></script>
+</head>
+<body>
+<div class="stagewin">
+  <div class="captionbar"><span class="cap-glyph">❯</span><span class="cap-name">Scanline</span>
+    <span class="capbtns"><span class="capbtn">─</span><span class="capbtn">□</span><span class="capbtn">✕</span></span></div>
+  <div class="actbar">
+    <span class="ab on"><svg data-symbol="terminal" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="archivebox" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="sliders" data-size="20"></svg></span></div>
+  <div class="tabstrip">
+    <span class="wtab"><svg data-symbol="terminal" data-size="13"></svg>dev</span>
+    <span class="wtab"><svg data-symbol="folder" data-size="13"></svg>deploy-files</span>
+    <span class="wtab on"><svg data-symbol="tunnel" data-size="13"></svg>socks5</span>
+    <span class="sbtn"><svg data-symbol="plus" data-size="17"></svg></span>
+    <span class="grow"></span><span class="sbtn"><svg data-symbol="split" data-size="17"></svg></span>
+    <span class="chip">Ctrl + K</span></div>
+
+  <!-- 隧道横幅:连接态 + 时长 + 流量 + 新建规则 -->
+  <div class="bannert">
+    <span class="chip">隧道已建立</span><span>经 bastion(ssh home)</span>
+    <span>运行 2h14m</span><span>↑ 120 MB · ↓ 340 MB</span>
+    <span class="grow"></span>
+    <span class="pbtn" style="display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:14px;background:var(--c-primary);color:var(--c-on-accent);font-size:12px;font-weight:600">+ 新建规则</span>
+    <span class="pbtn" style="display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:14px;background:var(--bg-elevated-2);color:var(--ink-1);border:1px solid var(--sep);font-size:12px;font-weight:600">断开隧道</span>
+  </div>
+
+  <!-- 规则表:本地/远程/动态三类 -->
+  <div class="ruletable">
+    <div class="rhead"><span class="rname">名称</span><span class="rtype">类型</span><span class="rpath">监听 → 目标</span><span class="rstate">状态</span><span style="width:60px">操作</span></div>
+    <div class="rrow"><span class="rname">web-local</span><span class="rtype"><span class="chip">本地 L</span></span><span class="rpath">localhost:8080 → web:80</span><span class="rstate"><span class="chip" style="background:color-mix(in srgb,var(--c-success) 14%,transparent);color:var(--c-success-text)">● 活动</span></span><span class="chev">⏸</span></div>
+    <div class="rrow"><span class="rname">db-remote</span><span class="rtype"><span class="chip">远程 R</span></span><span class="rpath">bastion:5432 → db:5432</span><span class="rstate"><span class="chip" style="background:color-mix(in srgb,var(--c-success) 14%,transparent);color:var(--c-success-text)">● 活动</span></span><span class="chev">⏸</span></div>
+    <div class="rrow"><span class="rname">socks</span><span class="rtype"><span class="chip">动态 SOCKS5</span></span><span class="rpath">localhost:1080 → 动态</span><span class="rstate"><span class="chip" style="background:color-mix(in srgb,var(--c-success) 14%,transparent);color:var(--c-success-text)">● 活动</span></span><span class="chev">⏸</span></div>
+  </div>
+
+  <!-- 近期事件 -->
+  <div class="logbox">
+    <div class="h">近期事件</div>
+    <div>14:00:02 规则 web-local 启动 · 监听 localhost:8080</div>
+    <div>14:03:47 socks 接入新连接 · 来自 127.0.0.1</div>
+    <div>14:05:10 db-remote 转发流量 +2.1 MB</div>
+  </div>
+
+  <div class="statusbar">
+    <span>socks5</span><span>隧道</span><span>3 条规则 · 全部活动</span>
+    <span class="grow"></span><span>规则变更即时生效,无需重连</span></div>
+
+  <span class="pin" style="top:58px;left:620px">1</span>
+  <span class="pin" style="top:58px;left:920px">2</span>
+  <span class="pin" style="top:220px;left:400px">3</span>
+  <span class="pin" style="top:600px;left:400px">4</span>
+</div>
+<div class="panel wide">
+  <h4>编号说明(与图内 pin 一一对应)—— 隧道会话(会话类型 × 端口映射/SOCKS5)</h4>
+  <ol>
+    <li><b>①</b><span>隧道 = 独立会话类型:标签条带交换箭头图标(特性 29;v1.0 强制清单)</span></li>
+    <li><b>②</b><span>横幅 = 会话级仪表:连接态/时长/双向流量 + 新建规则与断开主操作</span></li>
+    <li><b>③</b><span>规则表:本地 L / 远程 R / 动态 SOCKS5 三类,监听→目标一目了然,单规则可暂停</span></li>
+    <li><b>④</b><span>近期事件:连接接入/规则启停/流量统计,深色终端面呈现(恒深 scope)</span></li>
+  </ol>
+</div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+/* ============================================================
+   Scanline · components.css — 跨页共享组件单源(≥2 页用到必须收编于此)
+   规则:改组件只改这里;页面禁止重定义共享类;页面私有样式只放"仅本页出现"的选择器。
+   尺寸基准(output-spec §1a):状态栏 44(15/600) · 导航行 44(17/600) · 行 44-52 ·
+   chip 24(11.5) · 输入 40(r20) · Tab 图标 24/文字 11 · 卡 r16 · 块 r12
+   ============================================================ */
+
+/* 页面基础:居中舞台,body 随主题换肤 */
+body{margin:0;background:var(--bg-base);display:flex;flex-direction:column;align-items:center;
+  padding:24px 0;font-family:var(--font-ui)}
+
+/* 舞台与手机设备框 */
+.stage{position:relative;width:390px;height:844px;background:var(--bg-base);
+  border:12px solid #1C1C1E;border-radius:var(--r-bezel);overflow:hidden;
+  font:14px/var(--lh-ui) var(--font-ui);color:var(--ink-1)}
+.island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:120px;height:34px;
+  border-radius:20px;background:#000;z-index:5}
+.home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:134px;height:5px;
+  border-radius:3px;background:var(--ink-title);opacity:.85;z-index:5}
+
+/* 状态栏(高 44,文字 15/600) */
+.status{position:absolute;top:0;left:0;right:0;height:44px;display:flex;align-items:center;
+  justify-content:space-between;padding:14px 26px 0;font:600 15px var(--font-ui);color:var(--ink-1);z-index:4}
+.status .sic{display:flex;align-items:center;gap:5px}
+
+/* 导航行(高 44:标题 17/600 · 返回 15) */
+.nav{position:absolute;top:44px;left:0;right:0;height:44px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 16px;z-index:4}
+.back{color:var(--c-primary);font-size:15px;font-weight:600}
+.nv-t{font-size:17px;font-weight:700;color:var(--ink-title)}
+.nv-a{color:var(--ink-1);font-size:18px}
+
+/* 会话条(手机终端顶部:新建 + 当前会话名(点按→切换 sheet)+ agent 入口) */
+.sessbar{position:absolute;top:44px;left:0;right:0;height:36px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 8px;z-index:4}
+.sbtn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;color:var(--ink-1)}
+.sessname{display:flex;align-items:center;gap:6px;height:26px;padding:0 11px;
+  border-radius:var(--r-capsule);background:var(--fill-input);font-size:12.5px;color:var(--ink-2)}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--c-brand)}
+
+/* Tab Bar(液态玻璃胶囊:悬浮 + 半透明 + 背景模糊;iOS 26/macOS 26 实现为原生 glassEffect,
+   Windows/Web/Android 几何一致、材质按平台等效降级——规格书「材质策略」节) */
+.tabbar{position:absolute;left:12px;right:12px;bottom:12px;height:64px;display:flex;
+  background:color-mix(in srgb,var(--bg-tabbar) 78%,transparent);
+  -webkit-backdrop-filter:blur(var(--chrome-blur)) saturate(var(--chrome-sat));
+  backdrop-filter:blur(var(--chrome-blur)) saturate(var(--chrome-sat));
+  border-radius:var(--r-capsule);
+  border:1px solid color-mix(in srgb,var(--ink-title) 9%,transparent);
+  box-shadow:0 8px 24px color-mix(in srgb,#000 35%,transparent);z-index:4}
+.tb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  font-size:11px;font-weight:600;color:var(--ink-4)}
+.tb.on{color:var(--c-primary)}
+.tb svg{width:24px;height:24px}
+
+/* 分组行(行 44-52) */
+.rows{margin:10px 16px;background:var(--bg-card);border:1px solid var(--sep);border-radius:var(--r-card);overflow:hidden}
+.row{min-height:46px;display:flex;align-items:center;gap:10px;padding:8px 14px}
+.rsep{height:1px;background:var(--sep-row);margin-left:14px}
+.grow{flex:1}
+.rt{font-size:15px}
+.rs{font-size:12.5px;color:var(--ink-3)}
+.chev{color:var(--chevron);font-size:15px}
+
+/* chips / 搜索框 */
+.chip{height:24px;padding:0 9px;border-radius:var(--r-chip);font-size:11.5px;display:inline-flex;
+  align-items:center;gap:4px;background:var(--fill-input);color:var(--ink-2);white-space:nowrap}
+.search{display:flex;align-items:center;gap:6px;height:36px;margin:8px 16px;padding:0 10px;
+  border-radius:var(--r-capsule);background:var(--fill-search);color:var(--ink-3);font-size:13.5px}
+
+/* 命令块(终端 inline 与块历史共用同一单源;铁律 3) */
+.block{margin:6px 10px;border:1px solid var(--sep);border-radius:var(--r-block);background:var(--bg-card);overflow:hidden}
+.blk-h{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--bg-elevated);
+  border-bottom:1px solid var(--sep-row);
+  font:600 12px var(--font-mono);color:var(--ink-1)}
+.blk-cmd{padding:6px 10px;font:12px/1.5 var(--font-mono);color:var(--ink-1);word-break:break-all}
+.blk-out{padding:2px 10px 7px;font:12px/1.55 var(--font-mono);color:var(--ink-2);
+  white-space:pre-wrap;word-break:break-word;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.dot.ok{background:var(--c-success)}
+.dot.err{background:var(--c-danger)}
+.dot.run{background:var(--c-warning)}
+
+/* 终端内容面 scope(恒深):浅色主题下依然深底浅字——块/文字改用恒定 term-* token */
+.termsurface{background:var(--bg-term)}
+.termsurface .block{background:var(--term-card);border-color:var(--term-sep)}
+.termsurface .blk-h{background:var(--term-elev);border-bottom-color:var(--term-sep-row)}
+.termsurface .blk-cmd{color:var(--term-ink)}
+.termsurface .blk-out{color:var(--term-ink-2)}
+.termsurface .tline{color:var(--term-ink)}
+.termsurface .tline.dim2{color:var(--term-ink-2)}
+
+/* 终端表面(恒深,两主题不换肤;prompt = 品牌绿;手机含会话条故 top=80) */
+.term{position:absolute;left:0;right:0;top:80px;bottom:84px;background:var(--bg-term);padding:10px 12px;
+  font:13px/1.55 var(--font-mono);color:var(--ink-1);overflow:hidden}
+.prompt{color:var(--c-brand);font-weight:600}
+.tline{white-space:pre-wrap;word-break:break-all}
+.tline.dim2{color:var(--ink-2)}
+.ghost{color:var(--ink-3)}
+.cursor{display:inline-block;width:8px;height:16px;background:var(--c-brand);vertical-align:-3px}
+
+/* 浮层原语(dim → sheet,层级 6/7) */
+.dim{position:absolute;inset:0;background:#000;opacity:.45;z-index:6}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--bg-elevated);
+  border-radius:var(--r-sheet) var(--r-sheet) 0 0;z-index:7}
+.grab{width:40px;height:5px;border-radius:2.5px;background:var(--sep-strong);margin:10px auto 4px}
+
+/* 输入栏(手机终端底部;桌面无此物) */
+.inputbar{position:absolute;left:0;right:0;bottom:84px;display:flex;align-items:center;gap:8px;
+  padding:8px 12px;background:color-mix(in srgb,var(--bg-card) 92%,transparent);
+  border-top:1px solid var(--sep);z-index:4}
+.field{flex:1;height:40px;border-radius:20px;background:var(--fill-input);display:flex;
+  align-items:center;padding:0 14px;font:14px var(--font-mono);color:var(--ink-2)}
+.send{width:28px;height:28px;border-radius:50%;background:var(--c-primary);color:#fff;
+  display:flex;align-items:center;justify-content:center;flex:none;font-size:14px}
+
+/* 悬浮球(手机命令面板唯一入口) */
+.fab{position:absolute;right:14px;bottom:140px;width:46px;height:46px;border-radius:50%;
+  background:var(--c-primary);color:#fff;display:flex;align-items:center;justify-content:center;z-index:4}
+
+/* 编号 pin 与说明面板(强制标注;pin 绝对定位于 stage,右/下缘 20px 内不放 pin) */
+.pin{position:absolute;width:22px;height:22px;border-radius:50%;background:var(--c-primary);color:#fff;
+  font:600 12px/22px sans-serif;text-align:center;z-index:9}
+.panel{width:390px;margin:16px auto 0;padding:12px 16px;background:var(--bg-card);
+  border:1px solid var(--sep);border-radius:12px;font-size:13px;color:var(--ink-2);box-sizing:border-box}
+.panel.wide{width:1240px}
+.panel h4{margin:0 0 8px;font-size:13.5px;color:var(--ink-1)}
+.panel ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.panel li{display:flex;gap:8px}
+.panel li b{color:var(--c-primary);font-weight:600;flex:none}
+
+/* ============================================================
+   桌面共享(基准端 = Windows 桌面;容器画布 1300×840,窗口 1240×710)
+   标题栏按 Win32 规范:应用名居左、控制钮(─ □ ✕)右置;密度紧凑(Fluent)
+   ============================================================ */
+.stagewin{position:relative;width:1240px;height:710px;background:var(--bg-base);
+  border:1px solid var(--sep-strong);border-radius:10px;overflow:hidden;
+  font:14px/var(--lh-ui) var(--font-ui);color:var(--ink-1);
+  box-shadow:0 24px 64px color-mix(in srgb,#000 45%,transparent)}
+.captionbar{position:absolute;top:0;left:0;right:0;height:36px;display:flex;align-items:center;
+  padding:0 4px 0 12px;background:var(--bg-elevated);z-index:4}
+.cap-glyph{width:18px;height:18px;border-radius:5px;background:var(--c-brand);display:flex;
+  align-items:center;justify-content:center;color:#04140A;font:700 11px var(--font-mono)}
+.cap-name{margin-left:8px;font-size:12.5px;color:var(--ink-2)}
+.capbtns{margin-left:auto;display:flex;height:36px}
+.capbtn{width:44px;display:flex;align-items:center;justify-content:center;color:var(--ink-2);font-size:12px}
+.tabstrip{position:absolute;top:36px;left:0;right:0;height:38px;display:flex;align-items:center;gap:4px;
+  padding:0 8px;border-bottom:1px solid var(--sep);z-index:4}
+.wtab{display:flex;align-items:center;gap:6px;height:27px;padding:0 11px;border-radius:7px;
+  font-size:12.5px;color:var(--ink-2)}
+.wtab.on{background:var(--bg-card);color:var(--ink-1);border:1px solid var(--sep);
+  box-shadow:0 1px 3px color-mix(in srgb,#000 18%,transparent)}
+.wtab svg{width:13px;height:13px;flex:none}
+.winmain{position:absolute;top:74px;left:0;right:0;bottom:28px;display:flex}
+.termgrid{flex:1;background:var(--bg-term);padding:10px 14px;position:relative;
+  font:13px/1.55 var(--font-mono);color:var(--ink-1);overflow:hidden}
+.sidepanel{width:260px;flex:none;border-left:1px solid var(--sep);background:var(--bg-base);
+  display:flex;flex-direction:column}
+.side-h{display:flex;align-items:center;gap:8px;padding:10px 12px 6px;font-size:12.5px;
+  font-weight:600;color:var(--ink-2)}
+.statusbar{position:absolute;left:0;right:0;bottom:0;height:28px;display:flex;align-items:center;gap:14px;
+  padding:0 12px;background:var(--bg-elevated);border-top:1px solid var(--sep);
+  font-size:11.5px;color:var(--ink-2);z-index:4}
+
+/* 活动栏 = 应用级导航(会话之外):全高(贴标题栏→状态栏),切换整个视图;
+   与移动端 Tab Bar 同构:终端 / 块历史 / 设置,同名同图标同序(铁律 5) */
+.actbar{position:absolute;left:0;top:36px;bottom:28px;width:48px;background:var(--bg-elevated);
+  border-right:1px solid var(--sep);display:flex;flex-direction:column;align-items:center;
+  padding:8px 0;gap:4px;z-index:4}
+.ab{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  color:var(--ink-4)}
+.ab.on{background:var(--c-tint);color:var(--c-primary)}
+.railsw{position:absolute;left:0;top:74px;bottom:28px;width:220px;background:var(--bg-elevated);
+  border-right:1px solid var(--sep);display:flex;flex-direction:column;padding:8px;z-index:4}
+.railhead{font-size:11.5px;font-weight:600;color:var(--ink-3);padding:4px 8px 6px}
+.railrow{display:flex;align-items:center;gap:10px;height:40px;margin:1px 0;padding:0 10px;
+  border-radius:8px;color:var(--ink-2);font-size:13px}
+.railrow.on{background:var(--c-tint);color:var(--c-primary);font-weight:600}
+.railrow svg{width:18px;height:18px;flex:none}
+.railsp{margin-top:auto}
+
+/* 块流主表面(C 方案骨架;全屏程序触发「全屏接管」态临时恢复传统网格) */
+.inputzone{position:absolute;padding:12px 14px;background:var(--bg-card);
+  border-bottom:1px solid var(--sep);display:flex;align-items:flex-start;gap:10px;z-index:3}
+.bigfield{flex:1;min-height:46px;border-radius:var(--r-input);background:var(--fill-input);
+  padding:13px 14px;font:13.5px/1.5 var(--font-mono);color:var(--ink-1)}
+.stream{position:absolute;bottom:28px;overflow:hidden;padding:10px 14px;display:flex;
+  flex-direction:column;gap:8px}
+.stream .blk-out{-webkit-line-clamp:4}
+.stream .block{margin:0}
+.tuihint{margin-top:auto;font:11.5px var(--font-ui);color:var(--ink-3)}

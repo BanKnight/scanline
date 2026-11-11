@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>状态矩阵 · 块失败 — HTML 轨</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/components.css">
+<style>.tabstrip{left:48px}.inputzone{top:74px;left:48px;right:0}.stream{top:140px;left:48px;right:0}</style>
+<script src="assets/theme.js"></script><script src="assets/icons.js"></script>
+</head>
+<body>
+<div class="stagewin">
+  <div class="captionbar"><span class="cap-glyph">❯</span><span class="cap-name">Scanline</span>
+    <span class="capbtns"><span class="capbtn">─</span><span class="capbtn">□</span><span class="capbtn">✕</span></span></div>
+  <div class="actbar">
+    <span class="ab on"><svg data-symbol="terminal" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="archivebox" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="sliders" data-size="20"></svg></span></div>
+  <div class="tabstrip">
+    <span class="wtab on"><span class="sdot"></span>dev</span>
+    <span class="sbtn"><svg data-symbol="plus" data-size="17"></svg></span>
+    <span class="grow"></span><span class="sbtn"><svg data-symbol="split" data-size="17"></svg></span>
+    <span class="chip">Ctrl + K</span></div>
+  <div class="inputzone">
+    <span class="chip" style="background:var(--c-brand-tint);color:var(--c-brand)">NL</span>
+    <span class="bigfield"><span class="cursor"></span></span>
+    <span class="send" style="width:36px;height:36px;font-size:16px">↑</span></div>
+  <div class="stream">
+    <div class="block">
+      <div class="blk-h"><span class="dot err"></span><span>docker logs</span><span class="grow"></span>
+        <span style="color:var(--ink-3);font-weight:400">退出码 1 · 1.2s</span></div>
+      <div class="blk-cmd">docker logs -f scanline-dev</div>
+      <div class="blk-out">Error response from daemon: container scanline-dev is not running</div>
+      <div class="dmeta" style="padding:0 10px 8px;display:flex;gap:8px">
+        <span class="chip" style="background:var(--c-brand-tint);color:var(--c-brand)">
+          <svg data-symbol="sparkles" data-size="12"></svg> 解释此失败</span>
+        <span class="chip">查看详情</span></div>
+    </div>
+    <div class="tline"><span class="prompt">~/dev ❯</span> <span class="cursor"></span></div>
+  </div>
+  <div class="statusbar"><span>~/dev</span><span> main</span><span>输入延迟 12ms</span><span class="grow"></span><span>Phosphor CRT</span></div>
+  <span class="pin" style="top:212px;left:600px">1</span>
+  <span class="pin" style="top:236px;left:340px">2</span>
+  <span class="pin" style="top:300px;left:400px">3</span>
+</div>
+<div class="panel wide">
+  <h4>状态 · 块失败(fail)—— 终端视图状态矩阵</h4>
+  <ol>
+    <li><b>①</b><span>失败块:红点 + 退出码/耗时直接进块头;失败在流里一眼可见,不必读输出</span></li>
+    <li><b>②</b><span>块内快捷动作:「解释此失败」(AI,BYOK)与「查看详情」(→ 块详情 push)——调用视图就地可得</span></li>
+    <li><b>③</b><span>失败块自动进块历史「失败」筛选;审计轨迹同步记录(信任基础设施)</span></li>
+  </ol>
+</div>
+</body>
+</html>

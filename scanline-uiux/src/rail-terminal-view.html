@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>终端视图 · 活动栏(应用级)+ 块流(会话内)— HTML 轨</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/components.css">
+<style>/* 仅本页样式:终端视图的几何(活动栏之外的部分) */
+.tabstrip{left:48px}
+.inputzone{top:74px;left:48px;right:0}
+.stream{top:140px;left:48px;right:0}
+.tmenu{position:absolute;top:74px;left:150px;width:210px;background:var(--bg-elevated);
+  border:1px solid var(--sep);border-radius:10px;z-index:8;
+  box-shadow:0 16px 48px color-mix(in srgb,var(--shadow-color) 45%,transparent);overflow:hidden}
+.tmr{display:flex;align-items:center;gap:9px;padding:9px 12px;font-size:13px;color:var(--ink-1)}
+.tmr svg{width:15px;height:15px;flex:none}
+.tmr .grow{flex:1}
+</style>
+<script src="assets/theme.js"></script>
+<script src="assets/icons.js"></script>
+</head>
+<body>
+
+<div class="stagewin">
+
+  <div class="captionbar">
+    <span class="cap-glyph">❯</span>
+    <span class="cap-name">Scanline</span>
+    <span class="capbtns">
+      <span class="capbtn">─</span>
+      <span class="capbtn">□</span>
+      <span class="capbtn">✕</span>
+    </span>
+  </div>
+
+  <!-- 活动栏:应用级(会话之外),全高,切换整个视图 -->
+  <div class="actbar">
+    <span class="ab on"><svg data-symbol="terminal" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="clock" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="sliders" data-size="20"></svg></span>
+  </div>
+
+  <!-- 终端视图内部:会话标签条(只属于本视图);标签带类型图标(会话类型系统) -->
+  <div class="tabstrip">
+    <span class="wtab on"><svg data-symbol="terminal" data-size="13"></svg>dev</span>
+    <span class="wtab"><svg data-symbol="terminal" data-size="13"></svg>ssh home</span>
+    <span class="wtab"><svg data-symbol="folder" data-size="13"></svg>deploy-files</span>
+    <span class="wtab"><svg data-symbol="tunnel" data-size="13"></svg>socks5</span>
+    <span class="sbtn"><svg data-symbol="plus" data-size="17"></svg></span>
+    <span class="grow"></span>
+    <span class="sbtn"><svg data-symbol="split" data-size="17"></svg></span>
+    <span class="chip">Ctrl + K</span>
+  </div>
+
+  <!-- 类型菜单:+ 唤起,新建时选择会话类型 -->
+  <div class="tmenu">
+    <div class="tmr"><svg data-symbol="terminal"></svg>终端会话<span class="grow"></span><span class="chip">MVP</span></div>
+    <div class="tmr"><svg data-symbol="folder"></svg>文件(SFTP)<span class="grow"></span><span class="chip">v1.0</span></div>
+    <div class="tmr"><svg data-symbol="tunnel"></svg>隧道 / 端口映射<span class="grow"></span><span class="chip">v1.0</span></div>
+    <div class="tmr"><svg data-symbol="monitor"></svg>远程桌面<span class="grow"></span><span class="chip">v1.0</span></div>
+    <div class="tmr" style="border-top:1px solid var(--sep-row)"><svg data-symbol="split"></svg>agent 窗格<span class="grow"></span><span class="chip">MVP</span></div>
+  </div>
+
+  <!-- 终端视图内部:输入区 + 块流 -->
+  <div class="inputzone">
+    <span class="chip" style="background:var(--c-brand-tint);color:var(--c-brand)">NL</span>
+    <span class="bigfield">cargo test --release <span class="cursor"></span></span>
+    <span class="send" style="width:36px;height:36px;font-size:16px">↑</span>
+  </div>
+
+  <div class="stream termsurface">
+    <div class="block">
+      <div class="blk-h"><span class="dot run"></span><span>cargo test</span><span class="grow"></span><span style="color:var(--ink-3);font-weight:400">运行中 · 12s</span></div>
+      <div class="blk-cmd">cargo test --release</div>
+      <div class="blk-out">running 12 tests — test result: ok. 12 passed; 0 failed (输出实时流入)</div>
+    </div>
+    <div class="block">
+      <div class="blk-h"><span class="dot ok"></span><span>cargo build</span><span class="grow"></span><span style="color:var(--ink-3);font-weight:400">3.8s</span></div>
+      <div class="blk-cmd">cargo build --release</div>
+      <div class="blk-out">Compiling scanline-core v0.1.0 — Finished `release` in 3.79s</div>
+    </div>
+    <div class="block">
+      <div class="blk-h"><span class="dot ok"></span><span>git pull</span><span class="grow"></span><span style="color:var(--ink-3);font-weight:400">0.8s</span></div>
+      <div class="blk-cmd">git pull --rebase</div>
+      <div class="blk-out">Already up to date.</div>
+    </div>
+  </div>
+
+  <div class="statusbar">
+    <span>~/dev</span>
+    <span> main</span>
+    <span>输入延迟 12ms</span>
+    <span>BYOK:本地 Ollama ✓</span>
+    <span class="grow"></span>
+    <span>Phosphor CRT</span>
+  </div>
+
+  <span class="pin" style="top:200px;left:12px">1</span>
+  <span class="pin" style="top:46px;left:620px">2</span>
+  <span class="pin" style="top:110px;left:180px">3</span>
+  <span class="pin" style="top:92px;left:400px">4</span>
+  <span class="pin" style="top:260px;left:400px">5</span>
+</div>
+
+<div class="panel wide">
+  <h4>编号说明(与图内 pin 一一对应)—— 应用层活动栏 + 终端视图(块流)</h4>
+  <ol>
+    <li><b>①</b><span>活动栏 = 应用级导航(会话之外):全高、三项连排,切换整个视图;与移动端底部 Tab Bar 同名同图标同序(铁律 5 同构映射);切视图不销毁 PTY</span></li>
+    <li><b>②</b><span>会话标签条只属于终端视图;每个标签带类型图标(终端 ❯ / 文件夹 = SFTP / 交换箭头 = 隧道)——会话类型是一等属性(特性 29);MVP 起终端类型,其余随 v1.0 强制清单补齐</span></li>
+    <li><b>③</b><span>类型菜单(+ 唤起):新建时选型——终端 / 文件(SFTP)/ 隧道 / 远程桌面 / agent 窗格;终端与 agent = MVP 即有,其余标 v1.0</span></li>
+    <li><b>④</b><span>输入区置顶常驻:NL 直接可用;Enter 执行、⇧Enter 换行;幽灵补全灰字内联</span></li>
+    <li><b>⑤</b><span>块流 = 会话表面(inline 调用视图):状态点/耗时/快捷动作;管理视图在块历史(铁律 3 数据唯一);vim/htop 运行时自动切换「网格接管」态(→ terminal-takeover)</span></li>
+  </ol>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>状态矩阵 · 断线重连 — HTML 轨</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/components.css">
+<style>.tabstrip{left:48px}.inputzone{top:74px;left:48px;right:0}.stream{top:190px;left:48px;right:0}
+.dcbanner{position:absolute;top:140px;left:48px;right:0;border:1px solid color-mix(in srgb,var(--c-warning) 45%,transparent);
+  border-radius:8px;padding:8px 12px;color:var(--c-warning-text);font-size:12.5px;
+  background:color-mix(in srgb,var(--c-warning) 10%,transparent);z-index:3}
+.faded{opacity:.45}
+</style>
+<script src="assets/theme.js"></script><script src="assets/icons.js"></script>
+</head>
+<body>
+<div class="stagewin">
+  <div class="captionbar"><span class="cap-glyph">❯</span><span class="cap-name">Scanline</span>
+    <span class="capbtns"><span class="capbtn">─</span><span class="capbtn">□</span><span class="capbtn">✕</span></span></div>
+  <div class="actbar">
+    <span class="ab on"><svg data-symbol="terminal" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="archivebox" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="sliders" data-size="20"></svg></span></div>
+  <div class="tabstrip">
+    <span class="wtab"><span class="sdot" style="background:var(--c-warning)"></span>ssh home</span>
+    <span class="sbtn"><svg data-symbol="plus" data-size="17"></svg></span>
+    <span class="grow"></span><span class="sbtn"><svg data-symbol="split" data-size="17"></svg></span>
+    <span class="chip">Ctrl + K</span></div>
+  <div class="inputzone">
+    <span class="bigfield" style="color:var(--ink-3)">重连后可继续输入…</span>
+    <span class="send" style="width:36px;height:36px;font-size:16px;background:var(--bg-elevated-2);color:var(--ink-3)">↑</span></div>
+  <div class="dcbanner">与 ssh home 的连接已断开 · 3 秒后自动重连(第 2 次)· 手动 <b>立即重连</b></div>
+  <div class="stream">
+    <div class="faded">
+      <div class="block">
+        <div class="blk-h"><span class="dot ok"></span><span>htop</span><span class="grow"></span><span style="color:var(--ink-3);font-weight:400">断开前最后输出</span></div>
+        <div class="blk-cmd">htop</div>
+        <div class="blk-out">14:02:01 INFO healthcheck ok
+14:02:31 INFO healthcheck ok</div>
+      </div>
+    </div>
+    <div class="tline"><span class="prompt">~/dev ❯</span> <span class="cursor" style="opacity:.45"></span></div>
+  </div>
+  <div class="statusbar"><span>~/dev</span><span>ssh home · 已断开</span><span>自动重连中…</span>
+    <span class="grow"></span><span>Phosphor CRT</span></div>
+  <span class="pin" style="top:150px;left:400px">1</span>
+  <span class="pin" style="top:240px;left:400px">2</span>
+  <span class="pin" style="top:80px;left:180px">3</span>
+</div>
+<div class="panel wide">
+  <h4>状态 · 断线重连(disconnect)—— 终端视图状态矩阵</h4>
+  <ol>
+    <li><b>①</b><span>断线横幅:黄警示 + 倒计时自动重连 + 手动立即重连;状态栏同步降级显示</span></li>
+    <li><b>②</b><span>内容降透明保留(.faded),不销毁——恢复后原样回归;铁律 1 的断线特例:状态保活,输入闸门</span></li>
+    <li><b>③</b><span>标签条会话点转黄(运行但断开);输入禁用防命令丢失,重连后自动补发可选</span></li>
+  </ol>
+</div>
+</body>
+</html>

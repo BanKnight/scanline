@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>块详情 — HTML 轨</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/components.css">
+<style>/* 仅本页样式:块详情 */
+.dh{position:absolute;top:36px;left:48px;right:0;height:44px;display:flex;align-items:center;gap:10px;
+  padding:0 16px;border-bottom:1px solid var(--sep);z-index:4}
+.vbody{position:absolute;top:80px;left:48px;right:0;bottom:28px;overflow:auto;padding:0 16px 16px}
+.dback{color:var(--c-primary);font-size:14px;font-weight:600}
+.dt{font-size:15px;font-weight:700;color:var(--ink-title)}
+.dmeta{display:flex;gap:8px;padding:14px 0 0;flex-wrap:wrap}
+.dsec{margin:14px 0 0}
+.dsec-h{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:8px}
+.dcmd{padding:12px 14px;border:1px solid var(--sep);border-radius:var(--r-input);
+  background:var(--bg-term);font:13px/1.6 var(--font-mono);color:var(--ink-1)}
+.dout{padding:12px 14px;border:1px solid var(--sep);border-radius:var(--r-input);
+  background:var(--bg-term);font:12.5px/1.6 var(--font-mono);color:var(--ink-2)}
+.dout .err{color:var(--c-danger-text)}
+.dai{border:1px solid color-mix(in srgb,var(--c-brand) 35%,transparent);border-radius:var(--r-input);
+  background:var(--c-brand-tint);padding:12px 14px;font-size:13px;color:var(--ink-1)}
+.dtrail{border:1px solid var(--sep);border-radius:var(--r-input);padding:4px 0;font-size:12.5px}
+.tr-r{display:flex;align-items:center;gap:10px;padding:7px 14px}
+.tr-t{color:var(--ink-3);font:12px var(--font-mono)}
+</style>
+<script src="assets/theme.js"></script>
+<script src="assets/icons.js"></script>
+</head>
+<body>
+
+<div class="stagewin">
+
+  <div class="captionbar">
+    <span class="cap-glyph">❯</span>
+    <span class="cap-name">Scanline</span>
+    <span class="capbtns">
+      <span class="capbtn">─</span><span class="capbtn">□</span><span class="capbtn">✕</span>
+    </span>
+  </div>
+
+  <div class="actbar">
+    <span class="ab"><svg data-symbol="terminal" data-size="20"></svg></span>
+    <span class="ab on"><svg data-symbol="archivebox" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="sliders" data-size="20"></svg></span>
+  </div>
+
+  <!-- 块详情视图(push 自块历史):返回 + 标题 + 对象菜单 -->
+  <div class="dh">
+    <span class="dback">‹ 块历史</span>
+    <span class="dt">块详情 · docker logs</span>
+    <span class="grow"></span>
+    <span class="chev" style="font-size:18px;color:var(--ink-1)">⋯</span>
+  </div>
+
+  <div class="vbody">
+  <div class="dmeta">
+    <span class="chip"><span class="dot err"></span> 失败 · 退出码 1</span>
+    <span class="chip">2 分前</span>
+    <span class="chip">耗时 1.2s</span>
+    <span class="chip">dev 会话</span>
+    <span class="chip">ssh home</span>
+    <span class="chip">/srv</span>
+  </div>
+
+  <div class="dsec">
+    <div class="dsec-h">命令</div>
+    <div class="dcmd">docker logs -f scanline-dev</div>
+  </div>
+
+  <div class="dsec">
+    <div class="dsec-h">输出全文</div>
+    <div class="dout">Error response from daemon: container scanline-dev is not running
+<span class="err">exit status: 1</span></div>
+  </div>
+
+  <div class="dsec">
+    <div class="dsec-h"><svg data-symbol="sparkles" data-size="14"></svg> AI 解释 <span class="chip">上下文 = 本块</span><span class="grow"></span><span class="chev">重新生成</span></div>
+    <div class="dai">命令失败原因:容器 <b>scanline-dev</b> 当前未运行。`docker logs` 只能查看运行中或已停止但未被清除的容器;可先执行 `docker ps -a` 确认容器状态,若已删除则需要重新启动服务。</div>
+  </div>
+
+  <div class="dsec">
+    <div class="dsec-h">审计轨迹(信任基础设施)</div>
+    <div class="dtrail">
+      <div class="tr-r"><span class="tr-t">14:02:11</span><span>块创建 · dev 会话</span></div>
+      <div class="tr-r"><span class="tr-t">14:02:11</span><span>本地执行(未涉及审批类命令)</span></div>
+      <div class="tr-r"><span class="tr-t">14:02:12</span><span>退出码 1 · 耗时 1.2s</span></div>
+      <div class="tr-r"><span class="tr-t">14:03:40</span><span>AI 解释生成 · Ollama 本地</span></div>
+    </div>
+  </div>
+  </div>
+
+  <div class="statusbar">
+    <span>块历史 / 块详情</span>
+  </div>
+
+  <span class="pin" style="top:46px;left:320px">1</span>
+  <span class="pin" style="top:78px;left:400px">2</span>
+  <span class="pin" style="top:404px;left:400px">3</span>
+  <span class="pin" style="top:560px;left:400px">4</span>
+</div>
+
+<div class="panel wide">
+  <h4>编号说明(与图内 pin 一一对应)—— 块详情(push 自块历史)</h4>
+  <ol>
+    <li><b>①</b><span>push 导航:‹ 返回块历史;右端 ⋯ = 对象级菜单(收藏 / 复制命令 / 导出 / 删除)——与「导航 ⋯ 管对象」规则一致</span></li>
+    <li><b>②</b><span>元数据 chips:状态/退出码/耗时/来源会话/目录——块作为结构化对象的字段直观呈现</span></li>
+    <li><b>③</b><span>AI 解释:上下文严格标注「= 本块」(铁律 7);BYOK 配置后可用;未配模型时此区显示引导态入口</span></li>
+    <li><b>④</b><span>审计轨迹 = 信任基础设施的时间轴形态:创建/执行/审批/退出全程可回放——每条命令的一生都在这里</span></li>
+  </ol>
+</div>
+
+</body>
+</html>

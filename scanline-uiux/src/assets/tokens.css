@@ -1,0 +1,74 @@
+/* ============================================================
+   Scanline · tokens.css — 颜色唯一事实源(与 tokens.json 一一对应)
+   深色优先::root 即深色;[data-theme="light"] 语义名换值不换名。
+   终端网格 --bg-term 两主题恒深(内容表面,不随 chrome 换肤)。
+   ============================================================ */
+:root{
+  /* color.brand */
+  --c-primary:#0A84FF;            /* 交互主色(HIG 蓝):链接/激活 Tab/主按钮/选中 */
+  --c-primary-pressed:#409CFF;    /* 选中强调文字 */
+  --c-brand:#5AF78E;              /* 品牌磷光绿:光标/prompt/品牌点缀;CRT 皮肤层可重映射 */
+  --c-tint:color-mix(in srgb,var(--c-primary) 16%,transparent);       /* 主色弱底 */
+  --c-brand-tint:color-mix(in srgb,var(--c-brand) 13%,transparent);   /* 品牌弱底 */
+
+  /* color.semantic */
+  --c-success:#30D158;  --c-success-text:#30D158;
+  --c-warning:#FF9F0A;  --c-warning-text:#FF9F0A;
+  --c-danger:#FF453A;   --c-danger-text:#FF453A;
+  --c-pin:#BF5AF2;                /* 置顶/审计标记 */
+
+  /* color.neutral(深) */
+  --bg-base:#0E0E10;              /* 页面底 */
+  --bg-grouped:#0E0E10;           /* 分组页底 */
+  --bg-card:#1C1C1F;              /* 卡片/行组 */
+  --bg-elevated:#232327;          /* 一级提升面(块头/工具条) */
+  --bg-elevated-2:#2C2C2E;        /* 二级提升面 */
+  --bg-tabbar:#161618;            /* Tab Bar 底 */
+  --bg-term:#0A0A0C;              /* 终端网格底(恒深,不随主题) */
+  --sep:#38383C;  --sep-row:#2A2A2E;  --sep-strong:#48484C;
+  --ink-title:#FFFFFF; --ink-1:#E8E8EA; --ink-2:#A8A8AE; --ink-3:#6E6E74;
+  --ink-dis:#4A4A4F; --chevron:#48484C;
+      --fill-search:#1C1C1F; --fill-input:#232327;
+
+      /* 终端内容面恒定组(两主题同值;内容表面恒深) */
+      --term-ink:#E8E8EA; --term-ink-2:#A8A8AE;
+      --term-card:#1C1C1F; --term-elev:#232327;
+      --term-sep:#38383C; --term-sep-row:#2A2A2E;
+
+      /* 远程桌面帧画面内容图像组(恒定;描绘远端屏幕,非 UI 着色) */
+      --fb-screen:#101820; --fb-win-bg:#1B2836; --fb-win-border:#2C3A4A;
+      --fb-win-text:#B9C6D2; --fb-desktop-text:#5F7186; --fb-letterbox:#000000;
+
+      /* 强调面上的元素与文字(恒定)/阴影基色(供 color-mix 派生) */
+      --c-on-accent:#FFFFFF; --c-on-success:#05230F; --shadow-color:#000000;
+
+      /* 代码语法高亮(内容图像组,恒定;vim 接管态示意) */
+      --syn-keyword:#C792EA; --syn-string:#9FD68A; --syn-func:#82AAFF; --syn-comment:#5C6370; --fb-letterbox:#000000;
+
+  /* typography */
+  --font-ui:-apple-system,'SF Pro Text','Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+  --font-web:system-ui,-apple-system,'SF Pro Text','PingFang SC',Roboto,'Noto Sans SC','Microsoft YaHei',sans-serif;
+  --font-mono:ui-monospace,'SF Mono','Cascadia Mono','JetBrains Mono',Consolas,monospace;
+  --lh-ui:1.4; --lh-body:2.0;
+
+  /* radius */
+  --r-bezel:54px; --r-screen:42px; --r-sheet:20px; --r-card:16px; --r-btn:14px;
+  --r-input:12px; --r-seg:10px; --r-chip:12px; --r-pill:22px; --r-block:12px;
+  --r-capsule:999px;              /* 液态玻璃胶囊几何(悬浮 Tab Bar/搜索框/胶囊控件) */
+
+  /* effects(iOS 26 玻璃材质:Apple 端走原生 glassEffect;其余端用此等效降级) */
+  --chrome-blur:20px;             /* chrome 表面背景模糊半径 */
+  --chrome-sat:1.4;               /* 模糊饱和度补偿 */
+}
+[data-theme="light"]{
+  --c-primary:#007AFF; --c-primary-pressed:#0A66FF; --c-brand:#17A24A;
+  --c-success:#28A745; --c-success-text:#28A745;
+  --c-warning:#FF9F0A; --c-warning-text:#E08600;
+  --c-danger:#FF3B30;  --c-danger-text:#E0342B; --c-pin:#AF52DE;
+  --bg-base:#F2F2F7; --bg-grouped:#F2F2F7; --bg-card:#FFFFFF;
+  --bg-elevated:#F7F7FA; --bg-elevated-2:#EFEFF2; --bg-tabbar:#F8F8F8;
+  --sep:#E5E5EA; --sep-row:#F0F0F2; --sep-strong:#D1D1D6;
+  --ink-title:#000000; --ink-1:#1C1C1E; --ink-2:#3A3A3C; --ink-3:#6D6D72;
+  --ink-dis:#B8B8BC; --chevron:#C7C7CC;
+  --fill-search:#E9E9EB; --fill-input:#ECECF0;
+}

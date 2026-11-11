@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>设置视图 — HTML 轨</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/components.css">
+<style>/* 仅本页样式:设置视图(应用层第三视图;双栏,避让 48px 活动栏) */
+.snav{position:absolute;top:36px;left:48px;bottom:28px;width:200px;border-right:1px solid var(--sep);
+  padding:10px 8px;display:flex;flex-direction:column;gap:4px;background:var(--bg-base);z-index:3}
+.snav-r{display:flex;align-items:center;gap:9px;height:34px;padding:0 10px;border-radius:8px;
+  font-size:13px;color:var(--ink-2)}
+.snav-r.on{background:var(--c-tint);color:var(--c-primary);font-weight:600}
+.snav-r svg{width:16px;height:16px;flex:none}
+.scontent{position:absolute;left:248px;right:0;top:36px;bottom:28px;overflow:hidden;padding:20px 24px}
+.sc-h{font-size:17px;font-weight:700;color:var(--ink-title);margin-bottom:4px}
+.sc-sub{font-size:12.5px;color:var(--ink-3);margin-bottom:14px}
+.guide{display:flex;gap:10px;align-items:flex-start;border:1px solid color-mix(in srgb,var(--c-brand) 35%,transparent);
+  background:var(--c-brand-tint);border-radius:var(--r-input);padding:12px 14px;font-size:13px;color:var(--ink-1);margin-bottom:14px}
+.sc-h2{font-size:12.5px;font-weight:600;color:var(--ink-3);margin:16px 0 8px}
+.sw{width:42px;height:26px;border-radius:13px;background:var(--ink-dis);position:relative;flex:none}
+.sw i{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:var(--c-on-accent)}
+.sw.on{background:var(--c-success)}
+.sw.on i{left:auto;right:2px}
+</style>
+<script src="assets/theme.js"></script>
+<script src="assets/icons.js"></script>
+</head>
+<body>
+
+<div class="stagewin">
+
+  <div class="captionbar">
+    <span class="cap-glyph">❯</span>
+    <span class="cap-name">Scanline</span>
+    <span class="capbtns">
+      <span class="capbtn">─</span><span class="capbtn">□</span><span class="capbtn">✕</span>
+    </span>
+  </div>
+
+  <div class="actbar">
+    <span class="ab"><svg data-symbol="terminal" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="clock" data-size="20"></svg></span>
+    <span class="ab on"><svg data-symbol="sliders" data-size="20"></svg></span>
+  </div>
+
+  <!-- 设置视图:双栏(分组导航 | 内容);分组可由插件注册(微内核) -->
+  <div class="snav">
+    <div class="snav-r"><svg data-symbol="palette"></svg>外观</div>
+    <div class="snav-r"><svg data-symbol="terminal"></svg>终端行为</div>
+    <div class="snav-r on"><svg data-symbol="sparkles"></svg>AI 模型</div>
+    <div class="snav-r"><svg data-symbol="archivebox"></svg>插件</div>
+    <div class="snav-r"><svg data-symbol="keyboard"></svg>快捷键</div>
+    <div class="snav-r"><svg data-symbol="info"></svg>关于</div>
+  </div>
+
+  <div class="scontent">
+    <div class="sc-h">AI 模型(BYOK)</div>
+    <div class="sc-sub">自带模型,本地优先:密钥仅存本机,无遥测、无云端转发、无抽成</div>
+
+    <div class="guide">
+      <svg data-symbol="sparkles" data-size="16" style="flex:none;margin-top:2px"></svg>
+      <span>尚未配置模型——AI 功能(解释 / NL / 审批辅助)当前显示为<b>引导态</b>,不会报错;配置任意一家后立即启用。纯本地路径( Ollama )可做到零云依赖。</span>
+    </div>
+
+    <div class="sc-h2">模型提供方</div>
+    <div class="rows">
+      <div class="row"><svg data-symbol="sparkles" data-size="15" style="color:var(--c-brand)"></svg>
+        <span class="grow"><span class="rt">Ollama · 本地</span><br><span class="rs">推荐 · 零云依赖 · 模型不出机器,完全离线可用</span></span>
+        <span class="chip">未配置</span><span class="chev">›</span></div>
+      <div class="rsep"></div>
+      <div class="row"><svg data-symbol="sparkles" data-size="15"></svg>
+        <span class="grow"><span class="rt">OpenAI 兼容</span><br><span class="rs">任意兼容端点(聚合网关 / 自建中转)</span></span>
+        <span class="chip">未配置</span><span class="chev">›</span></div>
+      <div class="rsep"></div>
+      <div class="row"><svg data-symbol="sparkles" data-size="15"></svg>
+        <span class="grow"><span class="rt">Anthropic</span><br><span class="rs">Claude 系列模型,直连官方 API</span></span>
+        <span class="chip">未配置</span><span class="chev">›</span></div>
+    </div>
+
+    <div class="sc-h2">AI 行为</div>
+    <div class="rows">
+      <div class="row"><span class="grow"><span class="rt">幽灵补全</span><br><span class="rs">本地历史 + 本地模型,可整组关闭(AI-optional)</span></span><span class="sw on"><i></i></span></div>
+      <div class="rsep"></div>
+      <div class="row"><span class="grow"><span class="rt">命令解释</span><br><span class="rs">失败块的就地解释,上下文 = 本块</span></span><span class="sw on"><i></i></span></div>
+    </div>
+  </div>
+
+  <div class="statusbar">
+    <span>设置 / AI 模型</span>
+    <span class="grow"></span>
+    <span>设置分区可由插件注册(微内核)</span>
+  </div>
+
+  <span class="pin" style="top:500px;left:100px">1</span>
+  <span class="pin" style="top:155px;left:1100px">2</span>
+  <span class="pin" style="top:92px;left:520px">3</span>
+  <span class="pin" style="top:340px;left:400px">4</span>
+</div>
+
+<div class="panel wide">
+  <h4>编号说明(与图内 pin 一一对应)—— 设置视图(应用层第三视图)</h4>
+  <ol>
+    <li><b>①</b><span>双栏设置:左分组导航 / 右内容;「插件」分区 = 插件化架构的管理面(启用/禁用/权限),各插件也可注册自己的设置分区</span></li>
+    <li><b>②</b><span>BYOK 引导态(铁律 7):未配模型不报错,AI 功能显示引导;三家覆盖「本地优先 → 云端可选」全谱系</span></li>
+    <li><b>③</b><span>本地优先声明常驻此页:密钥仅存本机、无遥测、无抽成——对 Warp/Termius 痛点(P9/P10)的直接回答</span></li>
+    <li><b>④</b><span>Ollama 卡 = 零云依赖推荐路径:纯本地可离线,是「发布即带完整 AI 但免订阅」承诺的兑现方式</span></li>
+  </ol>
+</div>
+
+</body>
+</html>

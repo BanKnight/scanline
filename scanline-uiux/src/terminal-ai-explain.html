@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>状态矩阵 · AI 解释 popover — HTML 轨</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/components.css">
+<style>.tabstrip{left:48px}.inputzone{top:74px;left:48px;right:0}.stream{top:140px;left:48px;right:0}
+.aipop{position:absolute;right:24px;top:330px;width:380px;background:var(--bg-elevated);
+  border:1px solid color-mix(in srgb,var(--c-brand) 35%,transparent);border-radius:12px;z-index:8;
+  box-shadow:0 16px 48px color-mix(in srgb,var(--shadow-color) 45%,transparent);overflow:hidden}
+.aih{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--c-brand-tint);
+  font-size:12px;font-weight:600;color:var(--c-brand)}
+.aib{padding:10px 12px;font-size:12.5px;color:var(--ink-1)}
+.aif{display:flex;gap:8px;padding:0 12px 10px}
+.aif .chip{cursor:default}
+</style>
+<script src="assets/theme.js"></script><script src="assets/icons.js"></script>
+</head>
+<body>
+<div class="stagewin">
+  <div class="captionbar"><span class="cap-glyph">❯</span><span class="cap-name">Scanline</span>
+    <span class="capbtns"><span class="capbtn">─</span><span class="capbtn">□</span><span class="capbtn">✕</span></span></div>
+  <div class="actbar">
+    <span class="ab on"><svg data-symbol="terminal" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="archivebox" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="sliders" data-size="20"></svg></span></div>
+  <div class="tabstrip">
+    <span class="wtab on"><span class="sdot"></span>dev</span>
+    <span class="sbtn"><svg data-symbol="plus" data-size="17"></svg></span>
+    <span class="grow"></span><span class="sbtn"><svg data-symbol="split" data-size="17"></svg></span>
+    <span class="chip">Ctrl + K</span></div>
+  <div class="inputzone">
+    <span class="chip" style="background:var(--c-brand-tint);color:var(--c-brand)">NL</span>
+    <span class="bigfield"><span class="cursor"></span></span>
+    <span class="send" style="width:36px;height:36px;font-size:16px">↑</span></div>
+  <div class="stream">
+    <div class="block">
+      <div class="blk-h"><span class="dot err"></span><span>docker logs</span><span class="grow"></span>
+        <span style="color:var(--ink-3);font-weight:400">退出码 1 · 1.2s</span></div>
+      <div class="blk-cmd">docker logs -f scanline-dev</div>
+      <div class="blk-out">Error response from daemon: container scanline-dev is not running</div>
+    </div>
+    <div class="tline"><span class="prompt">~/dev ❯</span> <span class="cursor"></span></div>
+  </div>
+  <!-- AI 解释 popover:锚定失败块,就地展示 -->
+  <div class="aipop">
+    <div class="aih"><svg data-symbol="sparkles" data-size="13"></svg>AI 解释 · 上下文 = 本块 · Ollama 本地</div>
+    <div class="aib">容器 <b>scanline-dev</b> 未运行,`docker logs` 因此拒绝输出。建议:`docker ps -a` 确认状态 → `docker start scanline-dev` 重启后重试。</div>
+    <div class="aif"><span class="chip">复制解释</span><span class="chip">生成修复命令(需确认)</span><span class="chip">重新生成</span></div>
+  </div>
+  <div class="statusbar"><span>~/dev</span><span> main</span><span>输入延迟 12ms</span><span>AI:Ollama 本地</span>
+    <span class="grow"></span><span>Phosphor CRT</span></div>
+  <span class="pin" style="top:360px;left:780px">1</span>
+  <span class="pin" style="top:186px;left:400px">2</span>
+  <span class="pin" style="top:404px;left:700px">3</span>
+</div>
+<div class="panel wide">
+  <h4>状态 · AI 解释 popover(ai-explain)—— 终端视图状态矩阵</h4>
+  <ol>
+    <li><b>①</b><span>popover 锚定失败块右侧,就地展示不离开终端;头部标注模型来源(铁律 7)</span></li>
+    <li><b>②</b><span>触发源:块内「解释此失败」快捷动作(对照 terminal-block-fail)</span></li>
+    <li><b>③</b><span>后续动作分级:「生成修复命令」必须走确认/审批流——解释可以随便,执行必须过闸</span></li>
+  </ol>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>状态矩阵 · 全屏程序(网格接管)— HTML 轨</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/components.css">
+<style>.tabstrip{left:48px}
+.gridvt{position:absolute;top:74px;left:48px;right:0;bottom:52px;background:var(--bg-term);
+  padding:8px 14px;font:13px/1.55 var(--font-mono);color:var(--ink-1);overflow:hidden}
+.gln{color:var(--ink-3);display:inline-block;width:34px}
+.gkw{color:var(--syn-keyword)}.gstr{color:var(--syn-string)}.gfn{color:var(--syn-func)}.gcm{color:var(--syn-comment);font-style:italic}
+.tkhint{position:absolute;left:48px;right:0;bottom:28px;height:24px;display:flex;align-items:center;
+  justify-content:center;background:color-mix(in srgb,var(--c-warning) 12%,transparent);
+  color:var(--c-warning-text);font-size:11.5px;z-index:4}
+</style>
+<script src="assets/theme.js"></script><script src="assets/icons.js"></script>
+</head>
+<body>
+<div class="stagewin">
+  <div class="captionbar"><span class="cap-glyph">❯</span><span class="cap-name">Scanline</span>
+    <span class="capbtns"><span class="capbtn">─</span><span class="capbtn">□</span><span class="capbtn">✕</span></span></div>
+  <div class="actbar">
+    <span class="ab on"><svg data-symbol="terminal" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="archivebox" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="sliders" data-size="20"></svg></span></div>
+  <div class="tabstrip">
+    <span class="wtab on"><span class="sdot"></span>dev · vim src/main.rs</span>
+    <span class="sbtn"><svg data-symbol="plus" data-size="17"></svg></span>
+    <span class="grow"></span><span class="sbtn"><svg data-symbol="split" data-size="17"></svg></span>
+    <span class="chip">Ctrl + K</span></div>
+
+  <!-- 全屏程序:会话表面切换为传统网格(应用级 chrome 常驻;整窗接管预留给远程桌面类会话) -->
+  <div class="gridvt">
+    <div><span class="gln">1</span><span class="gkw">fn</span> <span class="gfn">main</span>() {</div>
+    <div><span class="gln">2</span>    <span class="gkw">let</span> app = Terminal::new(<span class="gstr">"scanline"</span>);</div>
+    <div><span class="gln">3</span>    app.<span class="gfn">run</span>(BlockFlow::default());</div>
+    <div><span class="gln">4</span>    <span class="gcm">// TODO: 块流回滚性能基准(M0)</span></div>
+    <div><span class="gln">5</span>}</div>
+    <div><span class="gln">~</span></div><div><span class="gln">~</span></div><div><span class="gln">~</span></div>
+    <div><span class="gln">~</span></div><div><span class="gln">~</span></div><div><span class="gln">~</span></div>
+    <div style="margin-top:8px">-- INSERT --</div>
+  </div>
+
+  <div class="tkhint">全屏程序 · Esc 退出回块流</div>
+
+  <div class="statusbar"><span>~/dev</span><span> main</span><span>vim · 120×31</span>
+    <span class="grow"></span><span>Phosphor CRT</span></div>
+  <span class="pin" style="top:120px;left:400px">1</span>
+  <span class="pin" style="top:46px;left:300px">2</span>
+  <span class="pin" style="top:120px;left:14px">3</span>
+  <span class="pin" style="top:688px;left:150px">4</span>
+</div>
+<div class="panel wide">
+  <h4>状态 · 全屏程序 · 网格接管(takeover)—— 终端视图状态矩阵</h4>
+  <ol>
+    <li><b>①</b><span>会话表面切换为传统网格(输入区/块流隐藏)——TUI 兼容红线:vim/htop/less 100% 可用</span></li>
+    <li><b>②</b><span>会话标签条保留并标注接管中的程序;会话状态不销毁,其他会话不受影响</span></li>
+    <li><b>③</b><span>活动栏(应用级 chrome)常驻不隐藏——只有远程桌面类会话才做整窗接管(v1.0 波)</span></li>
+    <li><b>④</b><span>Esc(或程序退出)自动回块流;接管期间状态栏切换为 TUI 信息(程序名/行列)</span></li>
+  </ol>
+</div>
+</body>
+</html>

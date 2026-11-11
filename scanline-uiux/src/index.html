@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>Scanline · UI/UX 设计图集(第一批确认版)</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<style>
+:root{--maxw:1340px}
+body{margin:0;background:var(--bg-base);color:var(--ink-1);font:14px/1.5 var(--font-ui)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:28px 24px 60px}
+h1{font-size:24px;font-weight:800;margin:0 0 4px}
+h1 span{font-size:13px;color:var(--ink-3);font-weight:400;margin-left:8px}
+.sub{color:var(--ink-2);margin:0 0 12px}
+.badge{display:inline-block;background:var(--c-tint);color:var(--c-primary);border-radius:999px;
+  padding:4px 14px;font-size:12.5px;font-weight:600;margin-bottom:8px}
+h2{font-size:18px;font-weight:700;margin:34px 0 4px;border-top:1px solid var(--sep);padding-top:22px}
+.flow{color:var(--ink-3);font-size:12.5px;margin:2px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+/* 版式规则:桌面尺寸内容单列通栏;仅移动端尺寸(390px)内容用 .grid 双列(Android 派生批次) */
+.col{display:flex;flex-direction:column;gap:22px}
+figure{margin:0;background:var(--bg-card);border:1px solid var(--sep);border-radius:14px;padding:10px}
+figure iframe,figure img{width:100%;border:0;border-radius:8px;display:block}
+figcaption{padding:10px 6px 4px;font-size:12.5px;color:var(--ink-2)}
+.tag{display:inline-block;background:var(--c-tint);color:var(--c-primary);border-radius:6px;
+  padding:2px 8px;font-size:11.5px;font-weight:600;margin-right:6px}
+.t-multi{background:color-mix(in srgb,var(--c-success) 16%,transparent);color:var(--c-success-text)}
+.t-light{background:color-mix(in srgb,var(--c-pin) 14%,transparent);color:var(--c-pin)}
+code{font:12px var(--font-mono);color:var(--ink-3)}
+.segc{position:sticky;top:10px;z-index:9;display:inline-flex;background:var(--fill-search);
+  border-radius:10px;padding:2px;margin-left:12px;vertical-align:middle}
+.segc span{padding:5px 16px;border-radius:8px;font-size:12.5px;cursor:default;color:var(--ink-2)}
+.segc span.on{background:var(--bg-elevated-2);color:var(--ink-1);font-weight:600}
+.tok{font-size:12.5px;color:var(--ink-2);margin:6px 0}
+.tok code{color:var(--ink-1)}
+</style>
+<script>
+(function(){
+  var t=new URLSearchParams(location.search).get('theme');
+  if(t!=='light'&&t!=='dark'){try{t=localStorage.getItem('adr-theme');}catch(e){}}
+  if(t!=='light'&&t!=='dark'){t='dark';}
+  document.documentElement.setAttribute('data-theme',t);
+  function apply(v){document.documentElement.setAttribute('data-theme',v);
+    try{localStorage.setItem('adr-theme',v);}catch(e){}
+    document.querySelectorAll('.segc span').forEach(function(s){s.classList.toggle('on',s.dataset.v===v);});
+    document.querySelectorAll('iframe').forEach(function(f){try{f.contentWindow.postMessage({type:'adr-theme',theme:v},'*');}catch(e){}});
+    document.querySelectorAll('img[data-swap]').forEach(function(im){
+      var d=im.getAttribute('data-dark')||im.src, l=d.replace(/(\.\w+)$/,'x$1').replace(/x\./,'x-light.');
+      im.src = v==='light'? (im.getAttribute('data-light')||l) : d;
+      im.onerror=function(){im.src=d;im.onerror=null;};
+    });
+  }
+  window.addEventListener('message',function(e){var d=e&&e.data;
+    if(d&&d.type==='adr-theme-ready'){var c=document.documentElement.getAttribute('data-theme');
+      try{e.source.postMessage({type:'adr-theme',theme:c},'*');}catch(err){}}});
+  window.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('.segc span').forEach(function(s){
+      s.addEventListener('click',function(){apply(s.dataset.v);});});
+    apply(t);
+  });
+})();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <h1>Scanline · UI/UX 设计图集<span>v1.0 · 第一批确认版</span>
+    <span class="segc"><span data-v="dark" class="on">深色</span><span data-v="light">浅色</span></span></h1>
+  <p class="sub">AI-native 终端 · Windows 桌面基准(结构唯一,风格随平台)· 配套 <code>design_spec.md</code> + <code>tokens.json</code></p>
+  <span class="badge">18 页(结构总图 1 + 应用视图 4 + 会话类型 4 + 全局浮层 2 + 状态矩阵 7)· 第一批确认版</span>
+
+  <h2>一、结构总览</h2>
+  <p class="flow">阅读动线:应用层活动栏(会话之外)→ 终端视图 / 块历史视图 / 设置视图 → 全局浮层;箭头颜色区分 push / cover / sheet / popover</p>
+  <figure><img src="01-ia-flow.svg" loading="lazy" data-dark="01-ia-flow.svg">
+    <figcaption><span class="tag">L0 · 信息架构</span>三层结构与跳转语义;活动栏为应用级(会话之外),与移动端 Tab Bar 同构<br><code>01-ia-flow.svg</code></figcaption></figure>
+
+  <h2>二、应用层视图</h2>
+  <p class="flow">阅读动线:① 终端视图(默认)→ 活动栏切 ② 块历史 → 点卡片 ③ 块详情 → 活动栏切 ④ 设置</p>
+  <div class="col">
+    <figure><iframe loading="lazy" style="height:1010px" src="rail-terminal-view.html"></iframe>
+      <figcaption><span class="tag">① 应用视图 · 终端(块流)</span>会话标签条 + 输入区(NL)+ 块流;标签条只属于本视图<br><code>rail-terminal-view.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:1010px" src="blocks-history.html"></iframe>
+      <figcaption><span class="tag">② 应用视图 · 块历史</span>跨会话块库:检索 + 筛选 chips + 管理卡片;无会话 chrome<br><code>blocks-history.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:1010px" src="block-detail.html"></iframe>
+      <figcaption><span class="tag">③ push · 块详情</span>元数据 chips + 命令/输出全文 + AI 解释 + 审计轨迹<br><code>block-detail.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:1010px" src="settings.html"></iframe>
+      <figcaption><span class="tag">④ 应用视图 · 设置</span>双栏;AI 模型页 = BYOK 引导态;「插件」分区预留<br><code>settings.html · HTML 轨</code></figcaption></figure>
+  </div>
+
+  <h2>三、会话类型视图</h2>
+  <p class="flow">阅读动线:类型菜单(+ 唤起)选型 → ① 文件(SFTP,v1.0)→ ② 隧道(v1.0)→ ③ 远程桌面(v1.0,IronRDP)→ ④ agent 窗格(MVP,split);均为会话类型,住标签条带类型图标</p>
+  <div class="col">
+    <figure><iframe loading="lazy" style="height:1010px" src="sessions-file.html"></iframe>
+      <figcaption><span class="tag">会话类型 · 文件(SFTP)</span>Xshell 式:路径栏即工具栏 + 文件表 + 传输队列常驻底部<br><code>sessions-file.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:1010px" src="sessions-tunnel.html"></iframe>
+      <figcaption><span class="tag">会话类型 · 隧道</span>会话级仪表 + 规则表(本地 L/远程 R/动态 SOCKS5)+ 近期事件<br><code>sessions-tunnel.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:1010px" src="sessions-rdp.html"></iframe>
+      <figcaption><span class="tag">会话类型 · 远程桌面</span>IronRDP 帧画面 + 悬浮工具条;整窗接管语义独享<br><code>sessions-rdp.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:1010px" src="agent-pane.html"></iframe>
+      <figcaption><span class="tag">会话类型 · agent 窗格</span>终端视图内右 split(380px);步骤流 + inline 审批;手机端 = 全屏 cover<br><code>agent-pane.html · HTML 轨</code></figcaption></figure>
+  </div>
+
+  <h2>四、全局浮层</h2>
+  <p class="flow">阅读动线:任意视图 Ctrl+K 唤起 ① 命令面板 → NL 生成需确认;危险命令执行前 ② 审批弹层拦截</p>
+  <div class="col">
+    <figure><iframe loading="lazy" style="height:1010px" src="palette.html"></iframe>
+      <figcaption><span class="tag">浮层 · 命令面板</span>三合一输入(命令/NL/块检索);命令来自插件注册表<br><code>palette.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:1010px" src="trust-approval.html"></iframe>
+      <figcaption><span class="tag">浮层 · 执行审批</span>影响预览 + 本次允许/白名单/拒绝;决定写入审计轨迹<br><code>trust-approval.html · HTML 轨</code></figcaption></figure>
+  </div>
+
+  <h2>五、终端视图状态矩阵</h2>
+  <p class="flow">阅读动线:空闲 → 重输出 → 幽灵补全 → 块成功/失败 → AI 解释 → 断线重连 → 全屏接管(骨架不变,只变内容)</p>
+  <div class="col">
+    <figure><iframe loading="lazy" style="height:960px" src="terminal-idle.html"></iframe>
+      <figcaption><span class="tag">状态 · 空闲</span>提示符 + 光标;连接保持<br><code>terminal-idle.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:960px" src="terminal-streaming.html"></iframe>
+      <figcaption><span class="tag">状态 · 重输出</span>运行块实时流入;不锁输入<br><code>terminal-streaming.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:960px" src="terminal-ghost.html"></iframe>
+      <figcaption><span class="tag">状态 · 幽灵补全</span>灰字内联建议;Tab 采纳 / Esc 忽略<br><code>terminal-ghost.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:960px" src="terminal-block-fail.html"></iframe>
+      <figcaption><span class="tag">状态 · 块失败</span>红点 + 退出码 + 块内快捷动作<br><code>terminal-block-fail.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:960px" src="terminal-ai-explain.html"></iframe>
+      <figcaption><span class="tag">状态 · AI 解释</span>popover 锚定失败块;来源透明<br><code>terminal-ai-explain.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:960px" src="terminal-disconnect.html"></iframe>
+      <figcaption><span class="tag">状态 · 断线重连</span>黄横幅 + 自动重连;内容保留不销毁<br><code>terminal-disconnect.html · HTML 轨</code></figcaption></figure>
+    <figure><iframe loading="lazy" style="height:960px" src="terminal-takeover.html"></iframe>
+      <figcaption><span class="tag">状态 · 全屏接管</span>vim/htop 传统网格全宽;Esc 退出回块流<br><code>terminal-takeover.html · HTML 轨</code></figcaption></figure>
+  </div>
+
+  <h2>六、方法论 / Token</h2>
+  <p class="flow">阅读动线:设计原则 → Token 全量在 tokens.json(此处仅摘要)</p>
+  <div class="tok">铁律:① 层级 ≤3 ② PTY 常驻,回终端 ≤1 步 ③ 块单例两呈现,数据唯一 ④ 目的地平级不内展 ⑤ 同名同图标换容器(手机 Tab ↔ 桌面活动栏) ⑥ 常驻工具 ≤5 ⑦ AI 上下文来源透明,未配模型=引导态 ⑧ 浮层不抢终端焦点</div>
+  <div class="tok">主题:深色优先(<code>:root</code>);语义 token 换值不换名;终端面 <code>bg-term</code> 恒深;CRT 主题族为 token 之上的皮肤层</div>
+  <div class="tok">Token 摘要:主色 <code>c-primary</code> 品牌绿 <code>c-brand</code> 中性阶 <code>ink-1..3</code> / <code>sep</code>;胶囊 <code>r-capsule</code>;玻璃 <code>theme-blur</code>(Apple 端原生 glassEffect,其余端降级)——全量见 <code>tokens.json</code></div>
+  <div class="tok">基准端:<b>Windows 桌面</b>(结构唯一,风格随平台);Android = 移动容器派生;Web = 桌面同形;TUI = fast-follow</div>
+
+</div>
+</body>
+</html>

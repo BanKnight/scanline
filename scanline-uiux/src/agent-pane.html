@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<title>agent 窗格 — HTML 轨</title>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/components.css">
+<style>/* 仅本页样式:终端视图 + 右侧 agent split 窗格 */
+.tabstrip{left:48px}
+.inputzone{top:74px;left:48px;right:380px}
+.stream{top:140px;left:48px;right:380px}
+.apane{position:absolute;top:74px;right:0;bottom:28px;width:380px;border-left:1px solid var(--sep);
+  background:var(--bg-card);display:flex;flex-direction:column;z-index:4}
+.ap-h{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--sep);
+  font-size:12.5px;font-weight:600;color:var(--ink-1)}
+.ap-h .grow{flex:1}
+.ap-body{flex:1;overflow:hidden;padding:10px;display:flex;flex-direction:column;gap:8px;
+  font-size:12.5px;color:var(--ink-1)}
+.ap-step{display:flex;gap:8px;align-items:flex-start}
+.ap-step svg{flex:none;margin-top:2px}
+.ap-input{border-top:1px solid var(--sep);padding:10px}
+.ap-field{height:38px;border-radius:9px;background:var(--fill-input);display:flex;align-items:center;
+  padding:0 12px;font-size:12.5px;color:var(--ink-3)}
+</style>
+<script src="assets/theme.js"></script><script src="assets/icons.js"></script>
+</head>
+<body>
+<div class="stagewin">
+  <div class="captionbar"><span class="cap-glyph">❯</span><span class="cap-name">Scanline</span>
+    <span class="capbtns"><span class="capbtn">─</span><span class="capbtn">□</span><span class="capbtn">✕</span></span></div>
+  <div class="actbar">
+    <span class="ab on"><svg data-symbol="terminal" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="archivebox" data-size="20"></svg></span>
+    <span class="ab"><svg data-symbol="sliders" data-size="20"></svg></span></div>
+  <div class="tabstrip">
+    <span class="wtab on"><svg data-symbol="terminal" data-size="13"></svg>dev</span>
+    <span class="sbtn"><svg data-symbol="plus" data-size="17"></svg></span>
+    <span class="grow"></span>
+    <span class="sbtn" style="background:var(--c-tint);color:var(--c-primary)"><svg data-symbol="split" data-size="17"></svg></span>
+    <span class="chip">Ctrl + K</span></div>
+
+  <!-- 左:终端块流(会话内) -->
+  <div class="inputzone">
+    <span class="chip" style="background:var(--c-brand-tint);color:var(--c-brand)">NL</span>
+    <span class="bigfield"><span class="cursor"></span></span>
+    <span class="send" style="width:36px;height:36px;font-size:16px">↑</span></div>
+  <div class="stream">
+    <div class="tline"><span class="prompt">~/dev ❯</span> <span class="cursor"></span></div>
+  </div>
+
+  <!-- 右:agent split 窗格(会话内 split;承载第三方 CLI agent) -->
+  <div class="apane">
+    <div class="ap-h"><svg data-symbol="sparkles" data-size="14" style="color:var(--c-brand)"></svg>agent · Claude Code
+      <span class="grow"></span><span class="chev" style="font-size:16px">⋯</span><span style="color:var(--ink-2)">✕</span></div>
+    <div class="ap-body">
+      <div class="ap-step"><svg data-symbol="play" data-size="14" style="color:var(--c-success)"></svg><span>读取 scanline-core/src/grid.rs(128 行)</span></div>
+      <div class="ap-step"><svg data-symbol="play" data-size="14" style="color:var(--c-success)"></svg><span>生成性能基准方案(M0 载荷)</span></div>
+      <div class="ap-step"><svg data-symbol="clock" data-size="14" style="color:var(--c-warning)"></svg><span>请求执行:<b>cargo bench</b> —— 待审批</span></div>
+      <div class="block" style="margin:2px 0">
+        <div class="blk-h"><span class="dot run"></span><span>审批请求</span><span class="grow"></span></div>
+        <div class="blk-cmd">cargo bench --bench latency</div>
+        <div class="dmeta" style="display:flex;gap:8px;padding:4px 10px 8px">
+          <span class="chip" style="background:color-mix(in srgb,var(--c-success) 14%,transparent);color:var(--c-success-text)">✓ 允许</span>
+          <span class="chip">拒绝</span></div>
+      </div>
+    </div>
+    <div class="ap-input"><div class="ap-field">对 agent 说…(指令将过审批闸)</div></div>
+  </div>
+
+  <div class="statusbar">
+    <span>~/dev</span><span> main</span><span>agent:Claude Code · 待审批 1</span>
+    <span class="grow"></span><span>Phosphor CRT</span></div>
+
+  <span class="pin" style="top:88px;left:800px">1</span>
+  <span class="pin" style="top:190px;left:800px">2</span>
+  <span class="pin" style="top:300px;left:800px">3</span>
+  <span class="pin" style="top:620px;left:800px">4</span>
+</div>
+<div class="panel wide">
+  <h4>编号说明(与图内 pin 一一对应)—— agent 窗格(会话内 split;手机端为全屏 cover)</h4>
+  <ol>
+    <li><b>①</b><span>窗格头部:承载的 agent 名(Claude Code / Codex CLI 可切换);对象 ⋯ 与关闭;split 入口在标签条(激活态示意)</span></li>
+    <li><b>②</b><span>agent 步骤流:读取/生成/请求执行——每步真实可追,与终端块流并存但相互独立</span></li>
+    <li><b>③</b><span>待审批卡 inline:轻请求在窗格内就地批;危险命令升级为全局审批弹层(→ trust-approval);决定写审计</span></li>
+    <li><b>④</b><span>窗格输入:对 agent 的指令同样过审批闸——「承载」不等于「放行」</span></li>
+  </ol>
+</div>
+</body>
+</html>

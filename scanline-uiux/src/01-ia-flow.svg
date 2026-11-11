@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="920" viewBox="0 0 1400 920"
+     font-family="-apple-system,'SF Pro Text','Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="mP" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#0A84FF"/></marker>
+    <marker id="mC" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#30D158"/></marker>
+    <marker id="mS" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#BF5AF2"/></marker>
+    <marker id="mO" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#FF9F0A"/></marker>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0" y="0" width="1400" height="920" fill="#0E0E10"/>
+
+  <!-- title -->
+  <text x="700" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="#E8E8EA">Scanline · 信息架构总图</text>
+
+  <!-- legend: arrow semantics -->
+  <line x1="500" y1="50" x2="540" y2="50" stroke="#0A84FF" stroke-width="2.5"/>
+  <text x="546" y="54" font-size="12" fill="#A8A8AE">push</text>
+  <line x1="608" y1="50" x2="648" y2="50" stroke="#30D158" stroke-width="2.5"/>
+  <text x="654" y="54" font-size="12" fill="#A8A8AE">cover</text>
+  <line x1="724" y1="50" x2="764" y2="50" stroke="#BF5AF2" stroke-width="2.5" stroke-dasharray="5 4"/>
+  <text x="770" y="54" font-size="12" fill="#A8A8AE">sheet</text>
+  <line x1="846" y1="50" x2="886" y2="50" stroke="#FF9F0A" stroke-width="2.5" stroke-dasharray="2 4" stroke-linecap="round"/>
+  <text x="892" y="54" font-size="12" fill="#A8A8AE">popover</text>
+
+  <!-- column headers -->
+  <text x="230" y="104" text-anchor="middle" font-size="13" font-weight="600" fill="#6E6E74">L1 · 平级目的地</text>
+  <text x="730" y="104" text-anchor="middle" font-size="13" font-weight="600" fill="#6E6E74">L2 · Navigation Stack</text>
+  <text x="1200" y="104" text-anchor="middle" font-size="13" font-weight="600" fill="#6E6E74">L3 · 沉浸 cover</text>
+
+  <!-- L1: terminal -->
+  <rect x="60" y="120" width="340" height="150" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="80" y="146" font-size="15" font-weight="600" fill="#5AF78E">终端(默认)</text>
+  <text x="80" y="172" font-size="12" fill="#A8A8AE">桌面:窗口主表面 · 会话标签条</text>
+  <text x="80" y="194" font-size="12" fill="#A8A8AE">手机:全屏网格 + 底部 Tab</text>
+  <text x="80" y="216" font-size="12" fill="#6E6E74">分屏 = 窗格并排(非导航)</text>
+
+  <!-- L1: blocks history -->
+  <rect x="60" y="300" width="340" height="140" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="80" y="326" font-size="15" font-weight="600" fill="#E8E8EA">块历史</text>
+  <text x="80" y="352" font-size="12" fill="#A8A8AE">跨会话命令块档案 · 可检索</text>
+  <text x="80" y="374" font-size="12" fill="#A8A8AE">桌面:右侧侧板(终端常可见)</text>
+  <text x="80" y="396" font-size="12" fill="#6E6E74">手机:Tab 2</text>
+
+  <!-- L1: settings -->
+  <rect x="60" y="470" width="340" height="140" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="80" y="496" font-size="15" font-weight="600" fill="#E8E8EA">设置</text>
+  <text x="80" y="522" font-size="12" fill="#A8A8AE">BYOK 模型 · 外观 · 快捷键</text>
+  <text x="80" y="544" font-size="12" fill="#A8A8AE">桌面:独立窗口</text>
+  <text x="80" y="566" font-size="12" fill="#6E6E74">手机:Tab 3</text>
+
+  <!-- L2: session management -->
+  <rect x="560" y="120" width="340" height="110" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="580" y="146" font-size="15" font-weight="600" fill="#E8E8EA">会话管理</text>
+  <text x="580" y="170" font-size="12" fill="#A8A8AE">重命名 · 删除 · 默认 shell</text>
+  <text x="580" y="192" font-size="12" fill="#6E6E74">手机端 push;桌面 = 标签条直达</text>
+
+  <!-- L2: block detail -->
+  <rect x="560" y="270" width="340" height="150" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="580" y="296" font-size="15" font-weight="600" fill="#E8E8EA">块详情</text>
+  <text x="580" y="322" font-size="12" fill="#A8A8AE">命令 · 输出 · 耗时 · 退出码</text>
+  <text x="580" y="344" font-size="12" fill="#A8A8AE">AI 解释 · 审计轨迹(重放)</text>
+  <text x="580" y="366" font-size="12" fill="#6E6E74">从块历史或终端内块点击进入</text>
+
+  <!-- L2: settings groups -->
+  <rect x="560" y="460" width="340" height="150" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="580" y="486" font-size="15" font-weight="600" fill="#E8E8EA">设置组页</text>
+  <text x="580" y="512" font-size="12" fill="#A8A8AE">外观 / 终端行为 / AI 模型</text>
+  <text x="580" y="534" font-size="12" fill="#A8A8AE">快捷键 / 关于</text>
+  <text x="580" y="556" font-size="12" fill="#6E6E74">桌面设置窗口内 = 侧栏分组</text>
+
+  <!-- L3: agent focus -->
+  <rect x="1060" y="120" width="280" height="150" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="1080" y="146" font-size="15" font-weight="600" fill="#E8E8EA">agent 专注视图</text>
+  <text x="1080" y="172" font-size="12" fill="#A8A8AE">桌面:右窗格 split</text>
+  <text x="1080" y="194" font-size="12" fill="#A8A8AE">手机:全屏 cover</text>
+  <text x="1080" y="216" font-size="12" fill="#6E6E74">承载 Claude Code / Codex CLI</text>
+
+  <!-- L3: theme fitting room -->
+  <rect x="1060" y="300" width="280" height="150" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="1080" y="326" font-size="15" font-weight="600" fill="#E8E8EA">主题试穿(全屏)</text>
+  <text x="1080" y="352" font-size="12" fill="#A8A8AE">CRT 主题全屏预览</text>
+  <text x="1080" y="374" font-size="12" fill="#A8A8AE">‹ 完成 退出</text>
+  <text x="1080" y="396" font-size="12" fill="#6E6E74">入口:设置 › 外观 · 终端 ⋯</text>
+
+  <!-- arrows: push (blue) -->
+  <line x1="400" y1="170" x2="556" y2="170" stroke="#0A84FF" stroke-width="2.5" marker-end="url(#mP)"/>
+  <line x1="400" y1="370" x2="556" y2="370" stroke="#0A84FF" stroke-width="2.5" marker-end="url(#mP)"/>
+  <line x1="400" y1="535" x2="556" y2="535" stroke="#0A84FF" stroke-width="2.5" marker-end="url(#mP)"/>
+
+  <!-- arrows: cover (green) -->
+  <path d="M360,120 L360,88 L1130,88 L1130,116" fill="none" stroke="#30D158" stroke-width="2.5" marker-end="url(#mC)"/>
+  <path d="M400,505 L480,505 L480,440 L1000,440 L1000,375 L1056,375" fill="none" stroke="#30D158" stroke-width="2.5" marker-end="url(#mC)"/>
+
+  <!-- arrow: overlays reachable from anywhere (orange, dashed) -->
+  <line x1="230" y1="612" x2="230" y2="662" stroke="#FF9F0A" stroke-width="2.5" stroke-dasharray="2 4" stroke-linecap="round" marker-end="url(#mO)"/>
+  <text x="246" y="642" font-size="11" fill="#FF9F0A">任何层可唤起</text>
+
+  <!-- overlay band header -->
+  <text x="700" y="650" text-anchor="middle" font-size="13" font-weight="600" fill="#6E6E74">全局浮层(非层)</text>
+
+  <!-- overlay: command palette -->
+  <rect x="60" y="666" width="300" height="110" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="80" y="692" font-size="14" font-weight="600" fill="#E8E8EA">命令面板</text>
+  <text x="80" y="716" font-size="12" fill="#A8A8AE">桌:Ctrl+K · 手机:悬浮球</text>
+  <text x="80" y="738" font-size="12" fill="#A8A8AE">NL→命令 · 跳转 · 块检索</text>
+
+  <!-- overlay: approval -->
+  <rect x="400" y="666" width="300" height="110" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="420" y="692" font-size="14" font-weight="600" fill="#E8E8EA">审批弹层(trust)</text>
+  <text x="420" y="716" font-size="12" fill="#A8A8AE">差异预览 + 批准 / 拒绝</text>
+  <text x="420" y="738" font-size="12" fill="#A8A8AE">阻塞执行 · 输出可见(铁律 8)</text>
+
+  <!-- overlay: AI explain -->
+  <rect x="740" y="666" width="300" height="110" rx="12" fill="#1C1C1F" stroke="#38383C"/>
+  <text x="760" y="692" font-size="14" font-weight="600" fill="#E8E8EA">AI 解释 popover</text>
+  <text x="760" y="716" font-size="12" fill="#A8A8AE">块级锚定 · 就地展示</text>
+  <text x="760" y="738" font-size="12" fill="#A8A8AE">上下文 = 当前块(铁律 7)</text>
+
+  <!-- overlay: ghost completion (inline state, dashed = not an overlay) -->
+  <rect x="1080" y="666" width="300" height="110" rx="12" fill="#1C1C1F" stroke="#48484C" stroke-dasharray="6 4"/>
+  <text x="1100" y="692" font-size="14" font-weight="600" fill="#E8E8EA">幽灵补全</text>
+  <text x="1100" y="716" font-size="12" fill="#A8A8AE">网格内联态(非浮层)</text>
+  <text x="1100" y="738" font-size="12" fill="#A8A8AE">灰字建议 · Tab 采纳</text>
+
+  <!-- iron rules banner -->
+  <rect x="60" y="800" width="1280" height="44" rx="10" fill="#14231A" stroke="#2A5A3C"/>
+  <text x="700" y="827" text-anchor="middle" font-size="13" font-weight="600" fill="#5AF78E">铁律:PTY 会话任何导航下保持运行 · 回终端 ≤1 步 · 命令块数据唯一 · AI 入口未配模型 = 引导配置态</text>
+
+  <!-- footer note -->
+  <text x="700" y="878" text-anchor="middle" font-size="11" fill="#6E6E74">基准端:Windows 桌面(开发/验收主平台;结构唯一,风格随平台) · Android = 移动容器派生 · Web = 桌面同形 · 标题栏按 Win32 规范(控制钮右置)</text>
+</svg>
